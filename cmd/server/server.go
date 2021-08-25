@@ -1,14 +1,14 @@
 package server
 
 import(
-	"IDontKnowWhatIsThis/internal/app/router"
+	"IDontKnowWhatIsThis/cmd/router"
 	"github.com/gorilla/mux"
 	"net"
 	"net/http"
 	"time"
 )
 func Server(protocol, port string){
-	myRouter := mux.NewRouter().StrictSlash(true)
+	myRouter := mux.NewRouter()
 	myRouter.HandleFunc("/", router.WriteURL).Methods("POST")
 	myRouter.HandleFunc("/{id}",router.ReturnOriginUrl).Methods("GET")
 	listener, err := net.Listen(protocol,port)

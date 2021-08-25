@@ -1,9 +1,9 @@
 package main
 
-import "IDontKnowWhatIsThis/internal/app/server"
+import "IDontKnowWhatIsThis/cmd/server"
 
 func main() {
-	var protocol = "http"
-	var port = "8080"
+	var protocol = "tcp"
+	var port = "127.0.0.1:8080"
 	server.Server(protocol,port)
 }

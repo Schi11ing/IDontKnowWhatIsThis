@@ -1,15 +1,12 @@
 package router
 import (
-	hasher "IDontKnowWhatIsThis/internal/app/hasher"
+	hasher "IDontKnowWhatIsThis/cmd/hasher"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
-func HandleRequests(w http.ResponseWriter, r *http.Request) {
-
-}
 
 func ReturnOriginUrl(w http.ResponseWriter, r *http.Request){
 	if r != nil {
