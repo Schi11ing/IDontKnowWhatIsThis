@@ -15,7 +15,7 @@ import (
 func main() {
 		myRouter := mux.NewRouter()
 		myRouter.HandleFunc("/", WriteURL).Methods("POST")
-		myRouter.HandleFunc("/{id}",ReturnOriginUrl).Methods("GET")
+		myRouter.HandleFunc("/{id}",ReturnOriginURL).Methods("GET")
 		listener, err := net.Listen("tcp","127.0.0.1:8080")
 		if err != nil {
 			panic(err)
@@ -34,7 +34,7 @@ func main() {
 
 
 
-func ReturnOriginUrl(w http.ResponseWriter, r *http.Request){
+func ReturnOriginURL(w http.ResponseWriter, r *http.Request){
 	if r != nil {
 		vars := mux.Vars(r)
 		key := vars["id"]
@@ -58,7 +58,7 @@ func WriteURL(w http.ResponseWriter, r *http.Request){
 	if err != nil {
 		log.Println("err")
 	} else {
-		shorted, err := RegisterUrl(string(reqBody))
+		shorted, err := RegisterURL(string(reqBody))
 		if err != nil {
 			log.Println("err")
 		}else {
@@ -72,13 +72,13 @@ func WriteURL(w http.ResponseWriter, r *http.Request){
 var urlsMap = make(map[string]string)
 
 
-func RegisterUrl(url string) (string, error){
+func RegisterURL(url string) (string, error){
 	if _, found := urlsMap[url]; found {
-		return "", errors.New("URL already registered")
+		return "", errors.New("url already registered")
 	} else {
-		val, err := createShortUrl(url)
+		val, err := createShortURL(url)
 		if err != nil {
-			return "", errors.New("Returned empty string")
+			return "", errors.New("returned empty string")
 		} else {
 			urlsMap[val] = url
 			return val, nil
@@ -90,17 +90,17 @@ func ReturnOrigin(url string) (string, error){
 	if val, found := urlsMap[url]; found{
 		return val, nil
 	} else{
-		return "",errors.New("No such URL")
+		return "",errors.New("no such URL")
 	}
 }
 
-func createShortUrl(url string)(string, error){
+func createShortURL(url string)(string, error){
 	input := []byte(url)
 	encoded := base64.StdEncoding.EncodeToString(input)
 	if encoded != "" {
 		return encoded, nil
 	} else {
-		return "", errors.New("Empty string")
+		return "", errors.New("empty string")
 	}
 }
 
