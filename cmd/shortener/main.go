@@ -64,7 +64,7 @@ func WriteURL(w http.ResponseWriter, r *http.Request){
 		}else {
 			output := ("http://127.0.0.1:8080/" +shorted)
 			w.WriteHeader(201)
-			fmt.Fprintf(w, output)
+			fmt.Fprint(w, output)
 		}
 	}
 }
