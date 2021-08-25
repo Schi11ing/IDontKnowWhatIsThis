@@ -7,11 +7,11 @@ import(
 	"net/http"
 	"time"
 )
-func Server(protocol, port string){
+func Server(){
 	myRouter := mux.NewRouter()
 	myRouter.HandleFunc("/", router.WriteURL).Methods("POST")
 	myRouter.HandleFunc("/{id}",router.ReturnOriginUrl).Methods("GET")
-	listener, err := net.Listen(protocol,port)
+	listener, err := net.Listen("tcp","127.0.0.1:8080")
 	if err != nil {
 		panic(err)
 	}
