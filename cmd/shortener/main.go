@@ -1,6 +1,6 @@
 package main
 
-import "IDontKnowWhatIsThis/cmd/server"
+import "IDontKnowWhatIsThis/cmd/shortener/server"
 
 func main() {
 	var protocol = "tcp"

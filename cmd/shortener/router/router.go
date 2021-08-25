@@ -1,6 +1,6 @@
-package main
+package router
 import (
-	hasher "IDontKnowWhatIsThis/cmd/hasher"
+	hasher "IDontKnowWhatIsThis/cmd/shortener/hasher"
 	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"

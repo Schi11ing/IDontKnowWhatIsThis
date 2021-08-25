@@ -1,7 +1,7 @@
-package main
+package server
 
 import(
-	"IDontKnowWhatIsThis/cmd/router"
+	"IDontKnowWhatIsThis/cmd/shortener/router"
 	"github.com/gorilla/mux"
 	"net"
 	"net/http"
