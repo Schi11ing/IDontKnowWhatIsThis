@@ -5,13 +5,15 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
+	"io"
 	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
 	"time"
 )
-
+// IN main function exists router with two handlers for get and post methods
+// also here is created listner with parameters and server started
 func main() {
 		myRouter := mux.NewRouter()
 		myRouter.HandleFunc("/", WriteURL).Methods("POST")
@@ -33,13 +35,18 @@ func main() {
 
 
 
-
+//IN ReturnOriginURL we search wia id in map and if we found
 func ReturnOriginURL(w http.ResponseWriter, r *http.Request){
 	if r != nil {
 		vars := mux.Vars(r)
 		key := vars["id"]
 		origin, err := ReturnOrigin(key)
-		defer r.Body.Close()
+		defer func(Body io.ReadCloser) {
+			err := Body.Close()
+			if err != nil {
+				log.Println("return originULR body close error")
+			}
+		}(r.Body)
 		if err != nil{
 			log.Println("Error in finding string")
 		} else {
@@ -54,17 +61,25 @@ func ReturnOriginURL(w http.ResponseWriter, r *http.Request){
 
 func WriteURL(w http.ResponseWriter, r *http.Request){
 	reqBody, err := ioutil.ReadAll(r.Body)
-	defer r.Body.Close()
 	if err != nil {
 		log.Println("err")
 	} else {
+		defer func(Body io.ReadCloser) {
+			err := Body.Close()
+			if err != nil {
+				log.Println("writeURL body close error")
+			}
+		}(r.Body)
 		shorted, err := RegisterURL(string(reqBody))
 		if err != nil {
 			log.Println("err")
 		}else {
-			output := ("http://127.0.0.1:8080/" +shorted)
+			output := "http://127.0.0.1:8080/" +shorted
 			w.WriteHeader(201)
-			fmt.Fprint(w, output)
+			_, err2 := fmt.Fprint(w, output)
+			if err2 != nil {
+				return 
+			}
 		}
 	}
 }
